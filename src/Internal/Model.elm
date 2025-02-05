@@ -2242,7 +2242,7 @@ renderFocusStyle focus =
             , Just <| Property "outline" "none"
             ]
         )
-    , Style (Internal.Style.dot classes.any ++ ":focus .focusable, " ++ Internal.Style.dot classes.any ++ ".focusable:focus")
+    , Style ("label" ++ Internal.Style.dot classes.any ++ ":focus .focusable, " ++ Internal.Style.dot classes.any ++ ".focusable:focus")
         (List.filterMap identity
             [ Maybe.map (\color -> Property "border-color" (formatColor color)) focus.borderColor
             , Maybe.map (\color -> Property "background-color" (formatColor color)) focus.backgroundColor
