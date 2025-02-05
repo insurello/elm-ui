@@ -6,3 +6,4 @@ Some facts about the fork:
 
 - Based on elm-ui 1.1.7
 - Merged Chrome focus fix: https://github.com/mdgriffith/elm-ui/pull/362
+- Changed default focus styles from `:focus` to `:focus-visible`.

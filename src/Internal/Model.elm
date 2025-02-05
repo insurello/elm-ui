@@ -2217,7 +2217,7 @@ renderFocusStyle :
     FocusStyle
     -> List Style
 renderFocusStyle focus =
-    [ Style (Internal.Style.dot classes.focusedWithin ++ ":focus-within")
+    [ Style (Internal.Style.dot classes.focusedWithin ++ ":has(:focus-visible)")
         (List.filterMap identity
             [ Maybe.map (\color -> Property "border-color" (formatColor color)) focus.borderColor
             , Maybe.map (\color -> Property "background-color" (formatColor color)) focus.backgroundColor
@@ -2242,7 +2242,7 @@ renderFocusStyle focus =
             , Just <| Property "outline" "none"
             ]
         )
-    , Style ("label" ++ Internal.Style.dot classes.any ++ ":focus .focusable, " ++ Internal.Style.dot classes.any ++ ".focusable:focus")
+    , Style ("label" ++ Internal.Style.dot classes.any ++ ":focus-visible .focusable, " ++ Internal.Style.dot classes.any ++ ".focusable:focus-visible")
         (List.filterMap identity
             [ Maybe.map (\color -> Property "border-color" (formatColor color)) focus.borderColor
             , Maybe.map (\color -> Property "background-color" (formatColor color)) focus.backgroundColor
