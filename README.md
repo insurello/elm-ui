@@ -5,3 +5,4 @@ This is a fork of [elm-ui](https://github.com/mdgriffith/elm-ui) specifically fo
 Some facts about the fork:
 
 - Based on elm-ui 1.1.7
+- Merged Chrome focus fix: https://github.com/mdgriffith/elm-ui/pull/362
