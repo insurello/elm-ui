@@ -201,6 +201,7 @@ type Transformation
 
 type PseudoClass
     = Focus
+    | FocusVisible
     | Hover
     | Active
 
@@ -2655,6 +2656,23 @@ renderStyle options maybePseudo selector props =
                         ++ "\n}"
                     ]
 
+                FocusVisible ->
+                    let
+                        renderedProps =
+                            List.foldl (renderProps False) "" props
+                    in
+                    [ selector ++ "-fsv:focus-visible {" ++ renderedProps ++ "\n}"
+                    , ("." ++ classes.any ++ ":focus-visible " ++ selector ++ "-fsv  {")
+                        ++ renderedProps
+                        ++ "\n}"
+                    , (selector ++ "-fsv:has(:focus-visible) {")
+                        ++ renderedProps
+                        ++ "\n}"
+                    , (".focusable-parent:focus-visible ~ " ++ "." ++ classes.any ++ " " ++ selector ++ "-fsv {")
+                        ++ renderedProps
+                        ++ "\n}"
+                    ]
+
                 Active ->
                     [ selector ++ "-act:active {" ++ List.foldl (renderProps False) "" props ++ "\n}" ]
 
@@ -3263,6 +3281,9 @@ getStyleName style =
                     case selector of
                         Focus ->
                             "fs"
+
+                        FocusVisible ->
+                            "fsv"
 
                         Hover ->
                             "hv"

@@ -200,6 +200,8 @@ view model =
                 , Border.color darkBlue
                 , paddingXY 32 16
                 , Border.rounded 3
+                , Element.focusedMouseAndKeyboard [ Background.color grey ]
+                , Element.focusedKeyboardOnly [ Background.color red ]
 
                 -- , width fill
                 ]
