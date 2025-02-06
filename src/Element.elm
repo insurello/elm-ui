@@ -17,7 +17,7 @@ module Element exposing
     , image
     , Color, rgba, rgb, rgb255, rgba255, fromRgb, fromRgb255, toRgb
     , above, below, onRight, onLeft, inFront, behindContent
-    , Attr, Decoration, mouseOver, mouseDown, focused
+    , Attr, Decoration, mouseOver, mouseDown, focusedMouseAndKeyboard, focusedKeyboardOnly
     , Device, DeviceClass(..), Orientation(..), classifyDevice
     , modular
     , map, mapAttribute
@@ -182,7 +182,7 @@ This is very useful for things like dropdown menus or tooltips.
 
 # Temporary Styling
 
-@docs Attr, Decoration, mouseOver, mouseDown, focused
+@docs Attr, Decoration, mouseOver, mouseDown, focusedMouseAndKeyboard, focusedKeyboardOnly
 
 
 # Responsiveness
@@ -1678,9 +1678,41 @@ mouseDown decs =
             (Internal.unwrapDecorations decs)
 
 
-{-| -}
-focused : List Decoration -> Attribute msg
-focused decs =
+{-| This uses `:focus` in CSS. `:focus` applies to anything having focus, regardless of how it was focused:
+By clicking with a mouse, by tabbing with a keyboard, or by tapping on a touchscreen.
+
+`focusedMouseAndKeyboard` is not a 100 % accurate name (since it doesn’t mention touch screens or other
+input devices), but it’s a simple name that makes things clear enough.
+
+You probably want to use `Element.focusedKeyboardOnly` instead, unless you know that you specifically want
+a focus indicator regardless of input device in your case.
+
+This is called `Element.focused` in the original elm-ui.
+
+-}
+focusedMouseAndKeyboard : List Decoration -> Attribute msg
+focusedMouseAndKeyboard decs =
     Internal.StyleClass Flag.focus <|
         Internal.PseudoSelector Internal.Focus
+            (Internal.unwrapDecorations decs)
+
+
+{-| This uses `:focus-visible` in CSS. `:focus-visible` applies to:
+
+  - Elements that were focused with the keyboard.
+  - Text inputs, regardless of how they were focused. (Because you are expected to use a keyboard there, to type.)
+
+`focusedKeyboardOnly` is not a 100 % accurate name, since it is up to the browser to decide exactly
+when it applies, but it’s a simple name that makes things clear enough.
+
+This is the function you probably want to use for focus things. The idea is to display clear focus indicators
+for keyboard users, but not for mouse users (who don’t need it) since they are kinda ugly.
+
+This function does not exist in the original elm-ui.
+
+-}
+focusedKeyboardOnly : List Decoration -> Attribute msg
+focusedKeyboardOnly decs =
+    Internal.StyleClass Flag.focus <|
+        Internal.PseudoSelector Internal.FocusVisible
             (Internal.unwrapDecorations decs)

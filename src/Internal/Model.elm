@@ -201,6 +201,7 @@ type Transformation
 
 type PseudoClass
     = Focus
+    | FocusVisible
     | Hover
     | Active
 
@@ -2217,7 +2218,7 @@ renderFocusStyle :
     FocusStyle
     -> List Style
 renderFocusStyle focus =
-    [ Style (Internal.Style.dot classes.focusedWithin ++ ":focus-within")
+    [ Style (Internal.Style.dot classes.focusedWithin ++ ":has(:focus-visible)")
         (List.filterMap identity
             [ Maybe.map (\color -> Property "border-color" (formatColor color)) focus.borderColor
             , Maybe.map (\color -> Property "background-color" (formatColor color)) focus.backgroundColor
@@ -2242,7 +2243,7 @@ renderFocusStyle focus =
             , Just <| Property "outline" "none"
             ]
         )
-    , Style ("label" ++ Internal.Style.dot classes.any ++ ":focus .focusable, " ++ Internal.Style.dot classes.any ++ ".focusable:focus")
+    , Style ("label" ++ Internal.Style.dot classes.any ++ ":focus-visible .focusable, " ++ Internal.Style.dot classes.any ++ ".focusable:focus-visible")
         (List.filterMap identity
             [ Maybe.map (\color -> Property "border-color" (formatColor color)) focus.borderColor
             , Maybe.map (\color -> Property "background-color" (formatColor color)) focus.backgroundColor
@@ -2651,6 +2652,23 @@ renderStyle options maybePseudo selector props =
                         ++ renderedProps
                         ++ "\n}"
                     , (".focusable-parent:focus ~ " ++ "." ++ classes.any ++ " " ++ selector ++ "-fs {")
+                        ++ renderedProps
+                        ++ "\n}"
+                    ]
+
+                FocusVisible ->
+                    let
+                        renderedProps =
+                            List.foldl (renderProps False) "" props
+                    in
+                    [ selector ++ "-fsv:focus-visible {" ++ renderedProps ++ "\n}"
+                    , ("." ++ classes.any ++ ":focus-visible " ++ selector ++ "-fsv  {")
+                        ++ renderedProps
+                        ++ "\n}"
+                    , (selector ++ "-fsv:has(:focus-visible) {")
+                        ++ renderedProps
+                        ++ "\n}"
+                    , (".focusable-parent:focus-visible ~ " ++ "." ++ classes.any ++ " " ++ selector ++ "-fsv {")
                         ++ renderedProps
                         ++ "\n}"
                     ]
@@ -3263,6 +3281,9 @@ getStyleName style =
                     case selector of
                         Focus ->
                             "fs"
+
+                        FocusVisible ->
+                            "fsv"
 
                         Hover ->
                             "hv"
