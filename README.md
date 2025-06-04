@@ -9,3 +9,4 @@ Some facts about the fork:
 - Changed default focus styles from `:focus` to `:focus-visible`.
 - Replaced `Element.focused` with `Element.focusedMouseAndKeyboard` (= `:focus`) and `Element.focusedKeyboardOnly` (=
   `:focus-visible`).
+- Updated styling for the default radio buttons and checkboxes. Better contrast and no shadow for the checkboxes.

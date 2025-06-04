@@ -209,7 +209,7 @@ white =
 
 
 darkGrey =
-    Element.rgb (186 / 255) (189 / 255) (182 / 255)
+    Element.rgb255 135 148 162
 
 
 charcoal =
@@ -1746,7 +1746,7 @@ defaultRadioOption optionLabel status =
             , Border.color <|
                 case status of
                     Idle ->
-                        Element.rgb (208 / 255) (208 / 255) (208 / 255)
+                        darkGrey
 
                     Focused ->
                         Element.rgb (208 / 255) (208 / 255) (208 / 255)
@@ -2199,18 +2199,7 @@ defaultCheckbox checked =
                 Element.rgb (59 / 255) (153 / 255) (252 / 255)
 
             else
-                Element.rgb (211 / 255) (211 / 255) (211 / 255)
-        , Border.shadow
-            { offset = ( 0, 0 )
-            , blur = 1
-            , size = 1
-            , color =
-                if checked then
-                    Element.rgba (238 / 255) (238 / 255) (238 / 255) 0
-
-                else
-                    Element.rgb (238 / 255) (238 / 255) (238 / 255)
-            }
+                darkGrey
         , Background.color <|
             if checked then
                 Element.rgb (59 / 255) (153 / 255) (252 / 255)
