@@ -1736,17 +1736,16 @@ defaultRadioOption optionLabel status =
             , Border.width <|
                 case status of
                     Idle ->
-                        2
+                        1
 
                     Focused ->
-                        2
+                        1
 
                     Selected ->
                         5
             , Border.color <|
                 case status of
                     Idle ->
-                        --
                         darkGrey
 
                     Focused ->
@@ -2200,7 +2199,7 @@ defaultCheckbox checked =
                 Element.rgb (59 / 255) (153 / 255) (252 / 255)
 
             else
-                 darkGrey
+                darkGrey
         , Background.color <|
             if checked then
                 Element.rgb (59 / 255) (153 / 255) (252 / 255)
@@ -2212,7 +2211,7 @@ defaultCheckbox checked =
                 0
 
             else
-                2
+                1
         ]
         (if checked then
             Element.el
