@@ -15,7 +15,7 @@ elm.js
 examples/temporary/
 
 .vscode
-
+.idea
 
 sauce.env
 
